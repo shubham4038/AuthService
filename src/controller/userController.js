@@ -2,7 +2,7 @@ const UserService = require('../services/userService');
 
 const userService = new UserService();
 
-exports.createUser = async (req,res,next)=>{
+exports.signup = async (req,res,next)=>{
     try {
         const userDetails = {
             email:req.body.email,
@@ -62,6 +62,31 @@ exports.isAuthenticated = async(req,res,next)=>{
     }
 }
 
+exports.isAdmin = async (req,res,next)=>{
+    try {
+        console.log(req.body.id)
+        const response = await userService.isAdmin(req.body.id)
+        if(response === true){
+            return res.status(200).json({
+                status:"success",
+                message: 'User have admin Role',
+                response        
+            });
+        } 
+        return res.status(401).json({
+            status:"failed",
+            message: 'Userr is Not an admin',
+            err: error
+        });
+    } catch (error) {
+        return res.status(401).json({
+            status:"failed",
+            message: 'Userr is Not an admin',
+            err: error
+        });
+    }
+}
+
 
 exports.deleteUser = async (req,res,next)=>{
     try {
@@ -79,5 +104,7 @@ exports.deleteUser = async (req,res,next)=>{
             err:error
         })
     }
+
+
 
 }

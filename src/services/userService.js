@@ -51,6 +51,7 @@ class UserService{
             if(!user){
                 throw {error: "User not found"}
             }
+            return result.id;
         } catch (error) {
             throw {error: "Erros in token"}
         }
@@ -86,6 +87,14 @@ class UserService{
         }
     }
     
+    isAdmin(userId){
+        try {
+            const adminuser = userRepository.isAdmin(userId)
+            return adminuser 
+        } catch (error) {
+            throw {error : "error in service Role"}
+        }
+    }
 }
 
 module.exports = UserService;
